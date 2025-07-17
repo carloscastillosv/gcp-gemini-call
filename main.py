@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from google.cloud import tasks_v2
 import json
 from dotenv import load_dotenv
-
+import time
 
 app = Flask(__name__)
 
@@ -40,6 +40,12 @@ def enqueue_gemini():
 
 @app.route("/worker", methods=["POST"])
 def respond_to_request():
+    print("Worker received a request")
+    data = request.get_json()
+    print(data)
+
+    time.sleep(30)  # Simulate processing time
+
     return "Worker received the request", 200
 
 if __name__ == "__main__":
