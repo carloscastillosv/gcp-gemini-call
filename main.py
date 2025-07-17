@@ -15,11 +15,12 @@ LOCATION = os.environ["GCP_LOCATION"]
 WORKER_URL = os.environ["WORKER_URL"]
 SERVICE_ACCOUNT = os.environ["TASK_SERVICE_ACCOUNT_EMAIL"]
 
-@app.route("/")
+@app.route("/", methods=["POST"])
 def enqueue_gemini():
     event = request.get_json()
     bucket = event["bucket"]
     name = event["name"]
+  
 
     client = tasks_v2.CloudTasksClient()
     parent = client.queue_path(PROJECT_ID, LOCATION, QUEUE_ID)
